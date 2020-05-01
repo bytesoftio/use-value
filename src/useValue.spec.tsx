@@ -87,7 +87,7 @@ describe("useValue", () => {
     expect(target().text()).toBe("1")
   })
 
-  it.only("updates and resets value", () => {
+  it("updates and resets value", () => {
     const value = createValue(1)
     let receivedSetCount
     let receivedResetCount
