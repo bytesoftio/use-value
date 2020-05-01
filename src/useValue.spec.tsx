@@ -1,7 +1,8 @@
 import React from "react"
 import { mount } from "enzyme"
-import { createValue, useValue } from "./index"
+import { useValue } from "./index"
 import { act } from "react-dom/test-utils"
+import { createValue } from "@bytesoftio/value"
 
 describe("useValue", () => {
   it("uses new value", async () => {
