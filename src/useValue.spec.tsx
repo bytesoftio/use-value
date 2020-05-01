@@ -86,4 +86,56 @@ describe("useValue", () => {
 
     expect(target().text()).toBe("1")
   })
+
+  it.only("updates and resets value", () => {
+    const value = createValue(1)
+    let receivedSetCount
+    let receivedResetCount
+
+    let renders = 0
+
+    const Test = () => {
+      renders++
+      const [count, setCount, resetCount] = useValue(value)
+
+      if ( ! receivedSetCount) {
+        receivedSetCount = setCount
+        receivedResetCount = resetCount
+      }
+
+      return (
+        <h1>{count}</h1>
+      )
+    }
+
+    const wrapper = mount(<Test/>)
+    const target = () => wrapper.find("h1")
+
+    expect(renders).toBe(1)
+    expect(target().text()).toBe("1")
+
+    act(() => value.set(2))
+
+    expect(value.get()).toBe(2)
+    expect(target().text()).toBe("2")
+    expect(renders).toBe(2)
+
+    act(() => receivedResetCount(1))
+
+    expect(value.get()).toBe(1)
+    expect(target().text()).toBe("1")
+    expect(renders).toBe(3)
+
+    act(() => value.set(2))
+
+    expect(target().text()).toBe("2")
+    expect(value.get()).toBe(2)
+    expect(renders).toBe(4)
+
+    act(() => value.reset(5))
+
+    expect(target().text()).toBe("5")
+    expect(value.get()).toBe(5)
+    expect(renders).toBe(5)
+  })
 })
