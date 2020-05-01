@@ -98,10 +98,8 @@ describe("useValue", () => {
       renders++
       const [count, setCount, resetCount] = useValue(value)
 
-      if ( ! receivedSetCount) {
-        receivedSetCount = setCount
-        receivedResetCount = resetCount
-      }
+      receivedSetCount = setCount
+      receivedResetCount = resetCount
 
       return (
         <h1>{count}</h1>
