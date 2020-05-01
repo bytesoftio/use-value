@@ -17,7 +17,7 @@
 
 ## Description
 
-This package provides a React integration integration for [@bytesoftio/value](https://bytesoftio.github.io/value/.).
+This package provides a React integration integration for [@bytesoftio/value](https://github.com/bytesoftio/value).
 
 ## useValue
 
