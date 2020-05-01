@@ -17,11 +17,11 @@
 
 ## Description
 
-This package provides a React integration integration for [@bytesoftio/value](https://github.com/bytesoftio/value).
+This package provides a React integration for [@bytesoftio/value](https://github.com/bytesoftio/value).
 
 ## useValue
 
-This helper can be used to hook up a value inside acomponent.
+This helper can be used to hook up a value inside a component.
 
 ```tsx
 import React from "react"
