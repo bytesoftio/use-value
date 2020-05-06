@@ -38,9 +38,13 @@ describe("useValue", () => {
 
   it("uses new value with initializer", () => {
     const initializer = () => 1
+    let receivedSetState
+    let renders = 0
 
     const Test = () => {
-      const [value] = useValue(initializer)
+      renders++
+      const [value, setState] = useValue(initializer)
+      receivedSetState = setState
 
       return (
         <h1>{value}</h1>
@@ -50,14 +54,29 @@ describe("useValue", () => {
     const wrapper = mount(<Test/>)
     const target = () => wrapper.find("h1")
 
+    expect(renders).toBe(1)
     expect(target().text()).toBe("1")
+
+    act(() => receivedSetState(2))
+
+    expect(renders).toBe(2)
+    expect(target().text()).toBe("2")
+
+    act(() => receivedSetState(3))
+
+    expect(renders).toBe(3)
+    expect(target().text()).toBe("3")
   })
 
   it("uses value", () => {
     const value = createValue(1)
+    let receivedSetState
+    let renders = 0
 
     const Test = () => {
-      const [count] = useValue(value)
+      renders++
+      const [count, setState] = useValue(value)
+      receivedSetState = setState
 
       return (
         <h1>{count}</h1>
@@ -67,7 +86,23 @@ describe("useValue", () => {
     const wrapper = mount(<Test/>)
     const target = () => wrapper.find("h1")
 
+    expect(renders).toBe(1)
     expect(target().text()).toBe("1")
+
+    act(() => value.set(2))
+
+    expect(renders).toBe(2)
+    expect(target().text()).toBe("2")
+
+    act(() => receivedSetState(3))
+
+    expect(renders).toBe(3)
+    expect(target().text()).toBe("3")
+
+    act(() => receivedSetState(4))
+
+    expect(renders).toBe(4)
+    expect(target().text()).toBe("4")
   })
 
   it("uses value with initializer", () => {

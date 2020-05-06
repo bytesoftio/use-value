@@ -8,12 +8,12 @@ export const useValue: UseValue = <S>(initialState) => {
   const [reference, setReference] = useState(0)
 
   useEffect(() => {
-    return value.listen((v) => setReference((previous) => previous + 1), false)
+    return value.listen(() => setReference((previous) => previous + 1), false)
   }, [])
 
   const state = value.get()
   const setState = (newState) => value.set(newState)
-  const resetState = (initialState?) => value.reset(initialState)
+  const resetState = (initialState) => value.reset(initialState)
 
   return [state, setState, resetState]
 }

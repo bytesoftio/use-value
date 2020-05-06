@@ -5,7 +5,7 @@ export const unwrapValue = <S>(initialState: ValueInitializer<S | ObservableValu
   let value = isFunction(initialState) ? initialState() : initialState
 
   if ( ! (value instanceof Value)) {
-    value = createValue(value) as ObservableValue
+    value = createValue(value) as ObservableValue<S>
   }
 
   return value
