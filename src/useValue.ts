@@ -2,8 +2,8 @@ import { useEffect, useMemo, useState } from "react"
 import { UseValue } from "./types"
 import { unwrapValue } from "./unwrapValue"
 
-export const useValue: UseValue = <S>(initialState) => {
-  const value = useMemo(() => unwrapValue<S>(initialState), [])
+export const useValue: UseValue = <TState>(initialState) => {
+  const value = useMemo(() => unwrapValue<TState>(initialState), [])
 
   const [reference, setReference] = useState(0)
 

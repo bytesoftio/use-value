@@ -1,6 +1,6 @@
 import { ObservableValue } from "@bytesoftio/value"
 
-export type ValueReseter = <S>(initialState?: S) => void
-export type ValueUpdater<S> = (newValue: S) => void
-export type UseValue = <S>(initialState: S | ObservableValue<S> | (() => S | ObservableValue<S>)) => UseValueSpread<S>
-export type UseValueSpread<S> = [S, ValueUpdater<S>, ValueReseter]
+export type ValueReseter = <TState>(initialState?: TState) => void
+export type ValueUpdater<TState> = (newValue: TState) => void
+export type UseValue = <TState>(initialState: TState | ObservableValue<TState> | (() => TState | ObservableValue<TState>)) => UseValueSpread<TState>
+export type UseValueSpread<TState> = [TState, ValueUpdater<TState>, ValueReseter]
