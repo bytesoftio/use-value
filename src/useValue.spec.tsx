@@ -2,20 +2,20 @@ import React from "react"
 import { mount } from "enzyme"
 import { useValue } from "./index"
 import { act } from "react-dom/test-utils"
-import { createValue } from "@bytesoftio/value"
+import { createValue, ObservableValue } from "@bytesoftio/value"
 
 describe("useValue", () => {
   it("uses new value", async () => {
-    let receivedSetState
+    let receivedValue: ObservableValue
 
     let renders = 0
     const Component = () => {
-      const [state, setState] = useValue(0)
-      receivedSetState = setState
+      const value = useValue(0)
+      receivedValue = value
       renders++
 
       return (
-        <h1>{state}</h1>
+        <h1>{value.get()}</h1>
       )
     }
 
@@ -25,12 +25,12 @@ describe("useValue", () => {
     expect(renders).toBe(1)
     expect(target().text()).toBe("0")
 
-    act(() => receivedSetState(1))
+    act(() => receivedValue.set(1))
 
     expect(renders).toBe(2)
     expect(target().text()).toBe("1")
 
-    act(() => receivedSetState(1))
+    act(() => receivedValue.set(1))
 
     expect(renders).toBe(2)
     expect(target().text()).toBe("1")
@@ -38,16 +38,16 @@ describe("useValue", () => {
 
   it("uses new value with initializer", () => {
     const initializer = () => 1
-    let receivedSetState
+    let receivedValue: ObservableValue
     let renders = 0
 
     const Test = () => {
       renders++
-      const [value, setState] = useValue(initializer)
-      receivedSetState = setState
+      const value = useValue(initializer)
+      receivedValue = value
 
       return (
-        <h1>{value}</h1>
+        <h1>{value.get()}</h1>
       )
     }
 
@@ -57,12 +57,12 @@ describe("useValue", () => {
     expect(renders).toBe(1)
     expect(target().text()).toBe("1")
 
-    act(() => receivedSetState(2))
+    act(() => receivedValue.set(2))
 
     expect(renders).toBe(2)
     expect(target().text()).toBe("2")
 
-    act(() => receivedSetState(3))
+    act(() => receivedValue.set(3))
 
     expect(renders).toBe(3)
     expect(target().text()).toBe("3")
@@ -70,16 +70,16 @@ describe("useValue", () => {
 
   it("uses value", () => {
     const value = createValue(1)
-    let receivedSetState
+    let receivedValue: ObservableValue
     let renders = 0
 
     const Test = () => {
       renders++
-      const [count, setState] = useValue(value)
-      receivedSetState = setState
+      const count = useValue(value)
+      receivedValue = count
 
       return (
-        <h1>{count}</h1>
+        <h1>{count.get()}</h1>
       )
     }
 
@@ -94,12 +94,12 @@ describe("useValue", () => {
     expect(renders).toBe(2)
     expect(target().text()).toBe("2")
 
-    act(() => receivedSetState(3))
+    act(() => receivedValue.set(3))
 
     expect(renders).toBe(3)
     expect(target().text()).toBe("3")
 
-    act(() => receivedSetState(4))
+    act(() => receivedValue.set(4))
 
     expect(renders).toBe(4)
     expect(target().text()).toBe("4")
@@ -109,10 +109,10 @@ describe("useValue", () => {
     const initializer = () => createValue(1)
 
     const Test = () => {
-      const [count] = useValue(initializer)
+      const count = useValue(initializer)
 
       return (
-        <h1>{count}</h1>
+        <h1>{count.get()}</h1>
       )
     }
 
@@ -124,20 +124,18 @@ describe("useValue", () => {
 
   it("updates and resets value", () => {
     const value = createValue(1)
-    let receivedSetCount
-    let receivedResetCount
+    let receivedValue: ObservableValue
 
     let renders = 0
 
     const Test = () => {
       renders++
-      const [count, setCount, resetCount] = useValue(value)
+      const count = useValue(value)
 
-      receivedSetCount = setCount
-      receivedResetCount = resetCount
+      receivedValue = count
 
       return (
-        <h1>{count}</h1>
+        <h1>{count.get()}</h1>
       )
     }
 
@@ -153,7 +151,7 @@ describe("useValue", () => {
     expect(target().text()).toBe("2")
     expect(renders).toBe(2)
 
-    act(() => receivedResetCount(1))
+    act(() => receivedValue.set(1))
 
     expect(value.get()).toBe(1)
     expect(target().text()).toBe("1")

@@ -1,5 +1,6 @@
 import { isFunction } from "lodash"
-import { createValue, ObservableValue, Value, ValueInitializer } from "@bytesoftio/value"
+import { createValue, ObservableValue, Value } from "@bytesoftio/value"
+import { ValueInitializer } from "./types"
 
 export const unwrapValue = <TState>(initialState: ValueInitializer<TState | ObservableValue<TState>>): ObservableValue<TState> => {
   let value = isFunction(initialState) ? initialState() : initialState

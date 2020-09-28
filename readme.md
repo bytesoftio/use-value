@@ -32,14 +32,14 @@ const globalCount = createValue(0)
 
 const Component = () => {
   // hook up a new value, creates a new instance of ObservableValue behind the scenes
-  const [count1, setCount1] = useValue(0)
+  const count1 = useValue(0)
   // use an initializer / factory
-  const [count2, setCount2] = useValue(() => 0)
+  const count2 = useValue(() => 0)
   // use an existing instance of ObservableValue
-  const [count3, setCount3] = useValue(globalCount)
+  const count3 = useValue(globalCount)
   
-  const increment = () => setCount1(count1 + 1)
+  const increment = () => count1.set(count1 + 1)
 
-  return <button onClick={increment}>count: {count1}</button>
+  return <button onClick={increment}>count: {count1.get()}</button>
 }
 ```

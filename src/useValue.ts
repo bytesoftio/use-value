@@ -11,9 +11,5 @@ export const useValue: UseValue = <TState>(initialState) => {
     return value.listen(() => setReference((previous) => previous + 1), false)
   }, [])
 
-  const state = value.get()
-  const setState = (newState) => value.set(newState)
-  const resetState = (initialState) => value.reset(initialState)
-
-  return [state, setState, resetState]
+  return value
 }
